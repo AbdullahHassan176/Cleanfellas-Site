@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.cursor/
+*.tmp
+
+# Company Docs folder — contains private PDFs and internal files, not for public repo
+Company Docs/
