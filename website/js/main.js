@@ -417,30 +417,72 @@ if (bookingForm) {
 
     var message = buildMessage();
 
+    function showSuccess() {
+      // CRM: remember this customer for next time (their browser only)
+      try {
+        localStorage.setItem(CONTACT_KEY, JSON.stringify({
+          name: get('name'), phone: get('phone'), email: get('email'), company: get('company')
+        }));
+      } catch (err) { /* storage full/blocked — not critical */ }
+
+      var success = document.getElementById('form-success');
+      if (success) {
+        document.getElementById('success-ref').textContent = bookingRef;
+        success.classList.add('show');
+        success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      var postSend = document.getElementById('post-send');
+      if (postSend) postSend.classList.add('show');
+    }
+
     if (sendMethod === 'whatsapp') {
       window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank');
+      showSuccess();
     } else {
-      var subject = 'Booking Request ' + bookingRef + ': ' + get('service') + ' — ' + get('name');
-      window.location.href = 'mailto:' + BOOKING_EMAIL +
-        '?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(message);
-    }
+      // Email path — submit silently via Netlify Function (Resend)
+      var submitBtns = bookingForm.querySelectorAll('button[type="submit"]');
+      submitBtns.forEach(function (b) { b.disabled = true; });
 
-    // CRM: remember this customer for next time (their browser only)
-    try {
-      localStorage.setItem(CONTACT_KEY, JSON.stringify({
-        name: get('name'), phone: get('phone'), email: get('email'), company: get('company')
-      }));
-    } catch (err) { /* storage full/blocked — not critical */ }
+      var payload = {
+        ref: bookingRef,
+        name: get('name'), phone: get('phone'), email: get('email'),
+        company: get('company'), service: get('service'),
+        property: get('property'), urgency: get('urgency'),
+        date: get('date'), time: get('time'),
+        location: get('location'), details: get('details'),
+        source: leadSource()
+      };
 
-    var success = document.getElementById('form-success');
-    if (success) {
-      document.getElementById('success-ref').textContent = bookingRef;
-      success.classList.add('show');
-      success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      fetch('/.netlify/functions/send-booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.ok) {
+            showSuccess();
+          } else {
+            // Function returned an error — fall back to mailto
+            fallbackMailto();
+          }
+        })
+        .catch(function () {
+          // Network error (e.g. local preview without Netlify) — fall back to mailto
+          fallbackMailto();
+        })
+        .finally(function () {
+          submitBtns.forEach(function (b) { b.disabled = false; });
+        });
+
+      function fallbackMailto() {
+        var subject = 'Booking Request ' + bookingRef + ': ' + get('service') + ' — ' + get('name');
+        window.location.href = 'mailto:' + BOOKING_EMAIL +
+          '?subject=' + encodeURIComponent(subject) +
+          '&body=' + encodeURIComponent(message);
+        showSuccess();
+      }
     }
-    var postSend = document.getElementById('post-send');
-    if (postSend) postSend.classList.add('show');
   });
 
   // initialise wizard position (handles ?service= skip)
