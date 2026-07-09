@@ -1341,3 +1341,14 @@ h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.3px; }
   .review-box dl { grid-template-columns: 1fr; gap: 0.15rem; }
   .review-box dt { margin-top: 0.5rem; }
 }
+
+/* ---------- Mold / residential add-on box ---------- */
+.addon-box {
+  background: var(--sky-soft);
+  border-left: 4px solid var(--navy);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+.addon-box strong { color: var(--navy-darker); display: block; margin-bottom: 0.4rem; font-size: 1rem; }
+.addon-box p { color: var(--text-muted); font-size: 0.93rem; margin: 0; }
