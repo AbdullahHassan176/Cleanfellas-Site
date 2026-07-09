@@ -1,5 +1,6 @@
 [build]
   publish = "website"
+  functions = "netlify/functions"
 
 # No build command — pure static site
 
