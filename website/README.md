@@ -38,15 +38,32 @@ Or with Node.js:
 npx serve website -p 8321
 ```
 
-## How the Booking Form Works
+## How the Booking Wizard Works
 
-The site has no server, so the form doesn't "submit" anywhere by itself. Instead it pre-fills a
-message with all the customer's details and opens either:
+Booking is a four-step wizard (service → site details → contact → review). The site has no
+server, so the form doesn't "submit" anywhere by itself. Instead it pre-fills a message with all
+the customer's details and opens either:
 
 - **WhatsApp** — chat to `082 491 1234` (number set as `WHATSAPP_NUMBER` in `js/main.js`)
 - **Email** — a draft to `cleanfellas@absamail.co.za` (set as `BOOKING_EMAIL` in `js/main.js`)
 
 The customer presses send themselves, so bookings arrive as normal WhatsApp messages / emails.
+
+### Built-in CRM features
+
+Every booking message arrives in a structured format that includes:
+
+- **Booking reference** (e.g. `CF-20260709-4821`) — quote it in follow-ups and use it to track
+  leads in a spreadsheet or CRM.
+- **Lead source** — if the customer arrived from an ad or social link tagged with
+  `?utm_source=facebook&utm_campaign=winter-special`, the message says so; otherwise it shows
+  the referring website or "Direct visit". Tag your ad/social links with UTM parameters to see
+  which channels bring bookings.
+- **Submission timestamp**, property type and urgency — so you can prioritise urgent leads.
+
+Returning customers get their contact details pre-filled automatically (stored in their own
+browser only), and after sending, customers can download a **calendar reminder (.ics)** for
+their preferred date.
 
 **Upgrade path:** for a form that submits silently without opening WhatsApp/email, sign up at
 [formspree.io](https://formspree.io) (free tier available), then change the `<form>` tag in

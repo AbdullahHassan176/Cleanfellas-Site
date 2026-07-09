@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book an Appointment | Cleanfellas CC</title>
-  <meta name="description" content="Book a deep clean, thermal fogging or hygiene service with Cleanfellas CC. Free site surveys and quotes — we work after hours, weekends and public holidays.">
+  <meta name="description" content="Book a deep clean, thermal fogging or hygiene service with Cleanfellas CC in four quick steps. Free site surveys and quotes — we work after hours, weekends and public holidays.">
   <meta property="og:title" content="Book an Appointment | Cleanfellas CC">
   <meta property="og:description" content="Request a free site survey and quote from Cleanfellas CC. We work after hours, weekends and public holidays.">
   <meta property="og:type" content="website">
@@ -34,87 +34,179 @@
   </header>
 
   <section class="page-hero">
-    <h1>Book an Appointment</h1>
-    <p>Request a free site survey and quote. Fill in the form and send it via WhatsApp or email — we'll come back to you to confirm a date and time that suits you, even after hours or on weekends.</p>
+    <h1>Book in Four Quick Steps</h1>
+    <p>Pick your service, tell us about the site, leave your details and send — you'll get a booking reference instantly, and we'll come back to you to confirm a time that suits you.</p>
   </section>
 
   <section class="section">
     <div class="container booking-layout">
 
-      <!-- FORM -->
+      <!-- WIZARD -->
       <div class="form-card reveal reveal-left">
-        <h2 style="color:var(--navy-darker); margin-bottom:1.4rem;">Tell Us About Your Clean</h2>
+
+        <div class="wiz-progress" aria-hidden="true">
+          <div class="bar" id="wiz-bar"></div>
+          <div class="wiz-step active" data-step="1"><span class="dot">1</span><span class="lbl">Service</span></div>
+          <div class="wiz-step" data-step="2"><span class="dot">2</span><span class="lbl">The Site</span></div>
+          <div class="wiz-step" data-step="3"><span class="dot">3</span><span class="lbl">Your Details</span></div>
+          <div class="wiz-step" data-step="4"><span class="dot">4</span><span class="lbl">Review &amp; Send</span></div>
+        </div>
+
         <form id="booking-form" novalidate>
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="name">Full Name <span class="req">*</span></label>
-              <input type="text" id="name" name="name" required autocomplete="name" placeholder="e.g. Thandi Mokoena">
-            </div>
-            <div class="form-field">
-              <label for="phone">Phone Number <span class="req">*</span></label>
-              <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="e.g. 082 123 4567">
-            </div>
-            <div class="form-field">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com">
-            </div>
-            <div class="form-field">
-              <label for="company">Company / Organisation</label>
-              <input type="text" id="company" name="company" autocomplete="organization" placeholder="Optional">
-            </div>
-            <div class="form-field">
-              <label for="service">Service Required <span class="req">*</span></label>
-              <select id="service" name="service" required>
-                <option value="">— Select a service —</option>
-                <option>Commercial Kitchen Deep Clean</option>
-                <option>School / Facility Deep Clean</option>
-                <option>Halaal / Kosher Deep Clean</option>
-                <option>Thermal Fogging / Sanitising</option>
-                <option>Washroom / Bathroom Hygiene</option>
-                <option>Carpet / Ultrasonic Cleaning</option>
-                <option>Bathroom Equipment Install / Service</option>
-                <option>Regular Contract Cleaning</option>
-                <option>Not sure — please advise</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="date">Preferred Date</label>
-              <input type="date" id="date" name="date">
-            </div>
-            <div class="form-field">
-              <label for="time">Preferred Time</label>
-              <select id="time" name="time">
-                <option value="">— No preference —</option>
-                <option>Morning (07:00–12:00)</option>
-                <option>Afternoon (12:00–17:00)</option>
-                <option>After Hours / Evening</option>
-                <option>Weekend</option>
-                <option>Public Holiday</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="location">Site Location / Suburb</label>
-              <input type="text" id="location" name="location" placeholder="e.g. Benoni, Boksburg, Sandton…">
-            </div>
-            <div class="form-field full">
-              <label for="details">Tell Us More</label>
-              <textarea id="details" name="details" placeholder="Size of the site, type of equipment, how urgent it is, anything else we should know…"></textarea>
+          <!-- hidden fields the wizard fills in -->
+          <input type="hidden" id="service" name="service" value="">
+          <input type="hidden" id="property" name="property" value="">
+          <input type="hidden" id="urgency" name="urgency" value="">
+
+          <!-- STEP 1: SERVICE -->
+          <div class="wiz-panel active" data-panel="1">
+            <h2>What do you need cleaned?</h2>
+            <p class="hint">Choose the service closest to what you need — we'll confirm the details with you.</p>
+            <div class="service-options" id="service-options">
+              <button type="button" class="opt-card" data-value="Commercial Kitchen Deep Clean">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16"/><path d="M5 11v5a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-5"/><path d="M8.5 7c0-1 .6-1.6.6-2.6"/><path d="M12 7c0-1 .6-1.6.6-2.6"/><path d="M15.5 7c0-1 .6-1.6.6-2.6"/></svg>
+                Kitchen Deep Clean
+              </button>
+              <button type="button" class="opt-card" data-value="School / Facility Deep Clean">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9 12 4 2 9l10 5 10-5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/><path d="M22 9v6"/></svg>
+                School / Facility
+              </button>
+              <button type="button" class="opt-card" data-value="Halaal / Kosher Deep Clean">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                Halaal / Kosher
+              </button>
+              <button type="button" class="opt-card" data-value="Thermal Fogging / Sanitising">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="4" width="6" height="3" rx="1"/><path d="m19 7 1.5 1.5V21a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V8.5L15 7"/><path d="M3 4h.01"/><path d="M7 6h.01"/><path d="M10 9h.01"/><path d="M3 8h.01"/><path d="M6 11h.01"/></svg>
+                Thermal Fogging
+              </button>
+              <button type="button" class="opt-card" data-value="Washroom / Bathroom Hygiene">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                Washroom Hygiene
+              </button>
+              <button type="button" class="opt-card" data-value="Carpet / Ultrasonic Cleaning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+                Carpet / Ultrasonic
+              </button>
+              <button type="button" class="opt-card" data-value="Bathroom Equipment Install / Service">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6.4 6.4l-5 5a1.4 1.4 0 0 0 2 2l5-5a4.5 4.5 0 0 0 6.4-6.4l-2.6 2.6-2-2 2.6-2.6z"/></svg>
+                Equipment Install
+              </button>
+              <button type="button" class="opt-card" data-value="Regular Contract Cleaning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+                Regular Contract
+              </button>
+              <button type="button" class="opt-card" data-value="Not sure — please advise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                Not Sure Yet
+              </button>
             </div>
           </div>
 
-          <div class="msg-preview" id="msg-preview" aria-live="polite">
-            <span class="label">Live preview — this is the message we'll receive</span>
-            <span id="msg-preview-body"></span>
+          <!-- STEP 2: SITE -->
+          <div class="wiz-panel" data-panel="2">
+            <h2>Tell us about the site</h2>
+            <p class="hint">All of this is optional, but the more we know, the faster and more accurate your quote.</p>
+
+            <span class="field-label">Type of property</span>
+            <div class="chip-row" id="property-chips">
+              <button type="button" class="chip" data-value="Home">Home</button>
+              <button type="button" class="chip" data-value="Restaurant / Kitchen">Restaurant / Kitchen</button>
+              <button type="button" class="chip" data-value="School">School</button>
+              <button type="button" class="chip" data-value="Office">Office</button>
+              <button type="button" class="chip" data-value="Factory / Warehouse">Factory / Warehouse</button>
+              <button type="button" class="chip" data-value="Retail">Retail</button>
+              <button type="button" class="chip" data-value="Healthcare">Healthcare</button>
+              <button type="button" class="chip" data-value="Other">Other</button>
+            </div>
+
+            <span class="field-label">How soon do you need us?</span>
+            <div class="chip-row" id="urgency-chips">
+              <button type="button" class="chip" data-value="ASAP / urgent">ASAP / Urgent</button>
+              <button type="button" class="chip" data-value="Within 2 weeks">Within 2 weeks</button>
+              <button type="button" class="chip" data-value="This month">This month</button>
+              <button type="button" class="chip" data-value="Flexible">Flexible</button>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="location">Site Location / Suburb</label>
+                <input type="text" id="location" name="location" placeholder="e.g. Benoni, Boksburg, Sandton…">
+              </div>
+              <div class="form-field">
+                <label for="date">Preferred Date</label>
+                <input type="date" id="date" name="date">
+              </div>
+              <div class="form-field">
+                <label for="time">Preferred Time</label>
+                <select id="time" name="time">
+                  <option value="">— No preference —</option>
+                  <option>Morning (07:00–12:00)</option>
+                  <option>Afternoon (12:00–17:00)</option>
+                  <option>After Hours / Evening</option>
+                  <option>Weekend</option>
+                  <option>Public Holiday</option>
+                </select>
+              </div>
+              <div class="form-field full">
+                <label for="details">Anything else we should know?</label>
+                <textarea id="details" name="details" placeholder="Size of the site, type of equipment, access arrangements…"></textarea>
+              </div>
+            </div>
           </div>
 
-          <div class="form-actions">
-            <button type="submit" class="btn btn-whatsapp" data-send="whatsapp">Send via WhatsApp</button>
-            <button type="submit" class="btn btn-primary" data-send="email">Send via Email</button>
+          <!-- STEP 3: CONTACT -->
+          <div class="wiz-panel" data-panel="3">
+            <h2>Your details</h2>
+            <p class="hint">So we can confirm your appointment and send your quote.</p>
+            <div class="welcome-back" id="welcome-back"></div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="name">Full Name <span class="req">*</span></label>
+                <input type="text" id="name" name="name" required autocomplete="name" placeholder="e.g. Thandi Mokoena">
+              </div>
+              <div class="form-field">
+                <label for="phone">Phone Number <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="e.g. 082 123 4567">
+              </div>
+              <div class="form-field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com">
+              </div>
+              <div class="form-field">
+                <label for="company">Company / Organisation</label>
+                <input type="text" id="company" name="company" autocomplete="organization" placeholder="Optional">
+              </div>
+            </div>
           </div>
-          <div class="form-success" id="form-success">
-            ✓ Your booking request has been prepared! Complete sending it in the window or email draft that just opened, and we'll get back to you to confirm your appointment.
+
+          <!-- STEP 4: REVIEW -->
+          <div class="wiz-panel" data-panel="4">
+            <h2>Review &amp; send</h2>
+            <p class="hint">Check everything looks right, then send it via WhatsApp or email — nothing is sent until you press send in the app that opens.</p>
+            <div class="review-box">
+              <span class="ref" id="booking-ref">REF</span>
+              <dl id="review-list"></dl>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-whatsapp" data-send="whatsapp">Send via WhatsApp</button>
+              <button type="submit" class="btn btn-primary" data-send="email">Send via Email</button>
+            </div>
+            <div class="form-success" id="form-success">
+              ✓ Your booking request has been prepared! Complete sending it in the window or email draft that just opened. Quote your reference <strong id="success-ref"></strong> in any follow-up.
+            </div>
+            <div class="post-send" id="post-send">
+              <button type="button" class="btn btn-ics" id="btn-ics">📅 Add a reminder to your calendar</button>
+            </div>
+            <p class="form-note">Prefer to talk? Call us on <a href="tel:0118454444" style="color:var(--navy); font-weight:600;">011 845 4444</a>.</p>
           </div>
-          <p class="form-note">Both options open with your request pre-filled — nothing is sent until you press send. Prefer to talk? Call us on <a href="tel:0118454444" style="color:var(--navy); font-weight:600;">011 845 4444</a>.</p>
+
+          <div class="wiz-error" id="wiz-error"></div>
+
+          <div class="wiz-nav">
+            <button type="button" class="btn btn-back" id="wiz-back" style="visibility:hidden;">← Back</button>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-primary" id="wiz-next">Next →</button>
+          </div>
         </form>
       </div>
 
@@ -125,7 +217,8 @@
         <div class="row"><span class="ico">📱</span><div><strong>Faye Khan</strong> (Senior Member)<br><a href="tel:0824911234">082 491 1234</a></div></div>
         <div class="row"><span class="ico">💬</span><div><strong>WhatsApp</strong><br><a href="https://wa.me/27824911234" target="_blank" rel="noopener">Chat with us on WhatsApp</a></div></div>
         <div class="row"><span class="ico">✉️</span><div><strong>Email</strong><br><a href="mailto:cleanfellas@absamail.co.za">cleanfellas@absamail.co.za</a></div></div>
-        <div class="row"><span class="ico">📍</span><div><strong>Address</strong><br>41 Roan Street, Benoni, 1501<br>Gauteng, South Africa</div></div>
+        <div class="row"><span class="ico">📍</span><div><strong>Address</strong><br>105 Bon Accord Street, Benoni, 1501, South Africa<br>Gauteng, South Africa</div></div>
+        <div class="row"><span class="ico">🕐</span><div><strong>Office Hours</strong><br>Mon–Fri, 08:00–17:00<br><small>Cleans scheduled any day, any hour</small></div></div>
         <div class="hours">
           <strong style="color:var(--white);">Flexible Scheduling</strong><br>
           We work around your timetable — after hours, weekends and public holidays included. Free site surveys and quotes for all commercial work.
@@ -140,6 +233,7 @@
       <div class="footer-brand">
         <img src="assets/logo-horizontal.png" alt="Cleanfellas CC logo">
         <p>Specialist chemical deep cleaning, ultrasonic treatments and hygiene services since 2004. Dare to be the best!</p>
+        <p class="footer-tagline">"Clean space, clear mind."</p>
       </div>
       <div>
         <h4>Explore</h4>
@@ -164,10 +258,11 @@
       <div>
         <h4>Contact Us</h4>
         <ul>
-          <li>📍 41 Roan Street, Benoni, 1501</li>
+          <li>📍 105 Bon Accord Street, Benoni, 1501, South Africa</li>
           <li>📞 <a href="tel:0118454444">011 845 4444</a></li>
           <li>📱 <a href="tel:0824911234">082 491 1234</a> (Faye Khan)</li>
           <li>✉️ <a href="mailto:cleanfellas@absamail.co.za">cleanfellas@absamail.co.za</a></li>
+          <li>🕐 Office: Mon–Fri, 08:00–17:00</li>
         </ul>
       </div>
     </div>

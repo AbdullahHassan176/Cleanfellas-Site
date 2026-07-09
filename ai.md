@@ -27,7 +27,7 @@ website/
 | Faye Khan mobile | 082 491 1234 |
 | Email | cleanfellas@absamail.co.za |
 | WhatsApp | 27824911234 (E.164, set in `js/main.js`) |
-| Address | 41 Roan Street, Benoni, 1501 |
+| Address | 105 Bon Accord Street, Benoni, 1501, South Africa |
 
 ## Services (6 total — match across index, services, booking dropdown, all footers)
 1. Commercial Kitchen Deep Cleans (`#kitchens`)
