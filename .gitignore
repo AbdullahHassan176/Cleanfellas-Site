@@ -3,9 +3,10 @@
 Thumbs.db
 desktop.ini
 
-# Editor
+# Editor / tooling
 .vscode/
 .cursor/
+.claude/
 *.tmp
 
 # Company Docs folder — contains private PDFs and internal files, not for public repo
