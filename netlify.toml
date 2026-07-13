@@ -34,6 +34,13 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Enforce www canonical — redirect bare domain to www
+[[redirects]]
+  from = "https://cleanfellas.co.za/*"
+  to   = "https://www.cleanfellas.co.za/:splat"
+  status = 301
+  force = true
+
 # Pretty URLs — /services instead of /services.html
 [[redirects]]
   from = "/services"

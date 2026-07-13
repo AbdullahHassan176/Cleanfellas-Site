@@ -11,3 +11,9 @@ desktop.ini
 
 # Company Docs folder — contains private PDFs and internal files, not for public repo
 Company Docs/
+
+# Internal documents at root level
+*.docx
+*.xlsx
+*.pdf
+!website/assets/*.pdf

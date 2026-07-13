@@ -35,7 +35,9 @@ body {
   overflow-x: hidden;
 }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; display: block; height: auto; }
+/* Prevent CLS — images with width/height attrs get aspect-ratio automatically via this rule */
+img[width][height] { aspect-ratio: attr(width) / attr(height); }
 
 .container {
   max-width: var(--max-w);

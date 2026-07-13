@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Cleanfellas CC</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="assets/logo-round.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-hero { min-height: 80vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 2rem 1.5rem; }
+    .error-code { font-size: clamp(5rem,18vw,10rem); font-weight:800; color:var(--sky); line-height:1; margin-bottom:0.5rem; }
+    .error-hero h1 { font-size: clamp(1.4rem,4vw,2.2rem); color:var(--navy); margin-bottom:1rem; }
+    .error-hero p { color:var(--text-muted); max-width:36ch; margin:0 auto 2rem; }
+    .error-links { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-bar">
+      <a class="brand" href="index.html"><img src="assets/logo-horizontal.png" alt="Cleanfellas CC logo" width="220" height="67"></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Our Work</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="booking.html" class="btn-nav">Book a Clean</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="error-hero">
+    <div class="error-code">404</div>
+    <h1>Page Not Found</h1>
+    <p>The page you're looking for doesn't exist or may have moved. Try one of these instead:</p>
+    <div class="error-links">
+      <a href="index.html" class="btn btn-primary">Go Home</a>
+      <a href="services.html" class="btn btn-outline">Our Services</a>
+      <a href="booking.html" class="btn btn-outline">Book a Clean</a>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
