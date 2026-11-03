@@ -61,6 +61,7 @@ Env var required on Netlify: `RESEND_API_KEY`.
 - `og:image` set on all pages (relative paths — use absolute URLs when live for proper social sharing)
 - `booking.html` property chips include: Home, Restaurant/Kitchen, School, Office, Factory/Warehouse, Retail, Abattoir/Butcher, Healthcare, Other
 - Mobile nav auto-closes on link click (handled in `main.js`)
+- Phones (`max-width: 640px`): home service cards are two columns with the paragraph hidden (detail stays on `services.html`); footer services column uses `footer-services` and is hidden
 
 ## Netlify Deployment
 See `README.md` for one-click deploy button. Set `RESEND_API_KEY` in Netlify → Site Settings → Environment Variables.
