@@ -27,12 +27,12 @@ netlify.toml          Netlify config: publish dir, functions dir, cache headers,
 ## Key Business Info
 | Field | Value |
 |---|---|
-| Office phone | 011 845 4444 |
-| Faye Khan mobile | 082 491 1234 |
+| Phone | 082 491 1234 (Faye Khan) — no landline |
 | Email | cleanfellas@absamail.co.za |
+| Booking fallback | abdullah.hassan@globalnext.rocks — only if the primary booking email fails. Not shown on the site |
 | WhatsApp | 27824911234 (E.164, set in `js/main.js` as `WHATSAPP_NUMBER`) |
-| Address | 105 Bon Accord Street, Benoni, 1501, South Africa |
-| Booking email | `BOOKING_EMAIL` constant in `main.js` |
+| Address | Do not publish a street address |
+| Booking email | `BOOKING_EMAIL` in `main.js`; fallback is `FALLBACK_EMAIL` |
 
 ## Services (7 — must match across index, services, booking wizard, all footers)
 1. Commercial Kitchen Deep Cleans (`#kitchens`) — ultrasonic of cutlery/bain-maries included
@@ -49,7 +49,7 @@ netlify.toml          Netlify config: publish dir, functions dir, cache headers,
 4-step wizard: Service → Site details → Contact → Review & Send.
 On submit (step 4):
 - **WhatsApp path** — builds pre-filled `wa.me` URL, opens in new tab
-- **Email path** — POSTs to `/.netlify/functions/send-booking`; Resend sends notification to Cleanfellas + auto-reply to customer; fallback to `mailto:` on error/local
+- **Email path** — POSTs to `/.netlify/functions/send-booking`. Resend notifies `cleanfellas@absamail.co.za`, then `abdullah.hassan@globalnext.rocks` if that send fails, plus an auto-reply to the customer. If the function cannot deliver, the browser opens a mailto to the fallback address. If the function cannot be reached, the mailto goes to the primary address |
 
 `booking.html` accepts `?service=VALUE` query param to pre-select a service card.
 Env var required on Netlify: `RESEND_API_KEY`.

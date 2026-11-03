@@ -5,6 +5,7 @@
 const RESEND_API = 'https://api.resend.com/emails';
 const FROM_ADDRESS = 'bookings@cleanfellas.co.za';      // must match your verified Resend domain
 const NOTIFY_ADDRESS = 'cleanfellas@absamail.co.za';    // where Cleanfellas receives bookings
+const FALLBACK_ADDRESS = 'abdullah.hassan@globalnext.rocks'; // used only if the primary send fails
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -58,7 +59,7 @@ exports.handler = async function (event) {
         </div>
       </div>
       <div style="background:#e8f5fc;padding:14px 32px;border-radius:0 0 10px 10px;font-size:13px;color:#5b6570;border:1px solid #e0e8f0;border-top:none;">
-        Cleanfellas CC &bull; 105 Bon Accord Street, Benoni, 1501 &bull; 011 845 4444
+        Cleanfellas CC &bull; 082 491 1234
       </div>
     </div>`;
 
@@ -80,45 +81,64 @@ exports.handler = async function (event) {
         <p style="font-size:15px;color:#3a3f45;margin-top:24px;">Dare to be the best!<br><strong>The Cleanfellas Team</strong></p>
       </div>
       <div style="background:#e8f5fc;padding:14px 32px;border-radius:0 0 10px 10px;font-size:13px;color:#5b6570;border:1px solid #e0e8f0;border-top:none;">
-        Cleanfellas CC &bull; 105 Bon Accord Street, Benoni, 1501 &bull; 011 845 4444 &bull; cleanfellas@absamail.co.za
+        Cleanfellas CC &bull; 082 491 1234 &bull; cleanfellas@absamail.co.za
       </div>
     </div>` : null;
 
-  // ── Send both emails via Resend ───────────────────────────────────────────
-  const send = (payload) =>
-    fetch(RESEND_API, {
+  // ── Send emails via Resend ────────────────────────────────────────────────
+  const send = async (payload) => {
+    const response = await fetch(RESEND_API, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-    }).then((r) => r.json());
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || data.error) {
+      return { error: data.error || { message: `Email delivery failed (${response.status})` } };
+    }
+    return data;
+  };
+
+  const notifyPayload = {
+    from: FROM_ADDRESS,
+    reply_to: email || undefined,
+    subject: `New Booking: ${service} — ${name}`,
+    html: notifyHtml,
+  };
 
   try {
-    const jobs = [
-      send({
-        from: FROM_ADDRESS,
-        to: [NOTIFY_ADDRESS],
-        reply_to: email || undefined,
-        subject: `New Booking: ${service} — ${name}`,
-        html: notifyHtml,
-      }),
-    ];
-
-    if (replyHtml && email) {
-      jobs.push(
-        send({
-          from: FROM_ADDRESS,
-          to: [email],
-          subject: `Booking Received — ${service} | Cleanfellas CC`,
-          html: replyHtml,
-        })
-      );
+    let notifyResult;
+    try {
+      notifyResult = await send({ ...notifyPayload, to: [NOTIFY_ADDRESS] });
+    } catch (err) {
+      console.error('Primary booking email failed:', err);
+      notifyResult = { error: { message: err.message || 'Primary send failed' } };
     }
 
-    const results = await Promise.all(jobs);
-    const errors = results.filter((r) => r.error);
-    if (errors.length) {
-      console.error('Resend errors:', errors);
-      return { statusCode: 502, body: JSON.stringify({ error: 'Email delivery failed' }) };
+    if (notifyResult.error) {
+      console.error('Primary booking email failed, trying fallback:', notifyResult.error);
+      try {
+        notifyResult = await send({ ...notifyPayload, to: [FALLBACK_ADDRESS] });
+      } catch (err) {
+        console.error('Fallback booking email failed:', err);
+        notifyResult = { error: { message: err.message || 'Fallback send failed' } };
+      }
+      if (notifyResult.error) {
+        console.error('Fallback booking email failed:', notifyResult.error);
+        return { statusCode: 502, body: JSON.stringify({ error: 'Email delivery failed' }) };
+      }
+    }
+
+    if (replyHtml && email) {
+      const replyResult = await send({
+        from: FROM_ADDRESS,
+        to: [email],
+        subject: `Booking Received — ${service} | Cleanfellas CC`,
+        html: replyHtml,
+      });
+      if (replyResult.error) {
+        console.error('Auto-reply failed:', replyResult.error);
+      }
     }
 
     return { statusCode: 200, body: JSON.stringify({ ok: true }) };

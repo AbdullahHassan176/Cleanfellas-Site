@@ -189,6 +189,7 @@ var bookingForm = document.getElementById('booking-form');
 if (bookingForm) {
   var WHATSAPP_NUMBER = '27824911234'; // Faye Khan — 082 491 1234
   var BOOKING_EMAIL = 'cleanfellas@absamail.co.za';
+  var FALLBACK_EMAIL = 'abdullah.hassan@globalnext.rocks';
   var TOTAL_STEPS = 4;
   var currentStep = 1;
 
@@ -386,7 +387,7 @@ if (bookingForm) {
       'DTSTART;VALUE=DATE:' + ymd,
       'DTEND;VALUE=DATE:' + ymdEnd,
       'SUMMARY:Cleanfellas — ' + (get('service') || 'Deep clean') + ' (requested)',
-      'DESCRIPTION:Booking reference ' + bookingRef + '. Cleanfellas will confirm the exact time. Office: 011 845 4444',
+      'DESCRIPTION:Booking reference ' + bookingRef + '. Cleanfellas will confirm the exact time. Call: 082 491 1234',
       'LOCATION:' + (get('location') || ''),
       'END:VEVENT',
       'END:VCALENDAR'
@@ -463,21 +464,21 @@ if (bookingForm) {
           if (data.ok) {
             showSuccess();
           } else {
-            // Function returned an error — fall back to mailto
-            fallbackMailto();
+            // Primary delivery failed (and the server fallback did too) — open a draft to the fallback address
+            fallbackMailto(FALLBACK_EMAIL);
           }
         })
         .catch(function () {
-          // Network error (e.g. local preview without Netlify) — fall back to mailto
-          fallbackMailto();
+          // Network error (e.g. local preview without Netlify) — the visitor's mail app sends to the primary address
+          fallbackMailto(BOOKING_EMAIL);
         })
         .finally(function () {
           submitBtns.forEach(function (b) { b.disabled = false; });
         });
 
-      function fallbackMailto() {
+      function fallbackMailto(address) {
         var subject = 'Booking Request ' + bookingRef + ': ' + get('service') + ' — ' + get('name');
-        window.location.href = 'mailto:' + BOOKING_EMAIL +
+        window.location.href = 'mailto:' + address +
           '?subject=' + encodeURIComponent(subject) +
           '&body=' + encodeURIComponent(message);
         showSuccess();

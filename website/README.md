@@ -72,7 +72,7 @@ custom submit handler in `js/main.js`.
 
 ## Updating Content
 
-- **Phone / email / address** — appear in the footer of every page, the booking sidebar, and `js/main.js`. Search-and-replace the old value across the `website` folder.
+- **Phone / email** — appear in the footer of every page, the booking sidebar, and `js/main.js`. There is no street address on the site. Search-and-replace the old value across the `website` folder. Booking mail goes to `cleanfellas@absamail.co.za`, then `abdullah.hassan@globalnext.rocks` only if that send fails.
 - **Services** — cards on `index.html`, detail blocks on `services.html`, and the dropdown options in `booking.html`.
 - **Photos** — drop new images into `assets/` and reference them from `gallery.html`.
 - **Brochure** — replace `assets/cleanfellas-brochure.pdf` with the latest version (keep the same filename).
