@@ -1,5 +1,20 @@
 // ===== Cleanfellas CC — shared site scripts =====
 
+function trackEvent(name, params) {
+  if (typeof window.cfTrack === 'function') window.cfTrack(name, params);
+}
+
+document.addEventListener('click', function (e) {
+  var link = e.target.closest ? e.target.closest('a') : null;
+  if (!link) return;
+  var href = link.getAttribute('href') || '';
+  if (href.indexOf('tel:') === 0) {
+    trackEvent('phone_click', { link_url: href, link_text: (link.textContent || '').replace(/\s+/g, ' ').trim() });
+  } else if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
+    trackEvent('whatsapp_click', { link_url: link.href });
+  }
+});
+
 // Footer year
 document.querySelectorAll('#year').forEach(function (el) {
   el.textContent = new Date().getFullYear();
@@ -419,6 +434,11 @@ if (bookingForm) {
     var message = buildMessage();
 
     function showSuccess() {
+      trackEvent('generate_lead', {
+        lead_method: sendMethod,
+        service_name: get('service'),
+        booking_ref: bookingRef
+      });
       // CRM: remember this customer for next time (their browser only)
       try {
         localStorage.setItem(CONTACT_KEY, JSON.stringify({

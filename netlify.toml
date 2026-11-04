@@ -49,3 +49,9 @@
   from = "/booking"
   to   = "/booking.html"
   status = 200
+
+# Google Ads final URL. The page keeps gclid and other query params, then opens the kitchen booking step.
+[[redirects]]
+  from = "/kitchen/deep-clean"
+  to = "/Kitchen/Deep-Clean"
+  status = 301
