@@ -64,7 +64,7 @@ Env var required on Netlify: `RESEND_API_KEY`.
 - Phones (`max-width: 640px`): home service cards are two columns with the paragraph hidden (detail stays on `services.html`); footer services column uses `footer-services` and is hidden
 
 ## Analytics
-Each page `<head>` loads `gtm.js?id=GTM-PLGRHM63` and defines `gtag`. The site pushes `generate_lead` (booking sent), `phone_click`, and `whatsapp_click` to `dataLayer`. GA4 and the Google Ads conversion tag are configured inside Tag Manager.
+Each page `<head>` loads the Google tag `G-QTN0TVMNST` and Tag Manager `GTM-PLGRHM63`. The site pushes `generate_lead` (booking sent), `phone_click`, and `whatsapp_click` to `dataLayer`. GA4 and the Google Ads conversion tag are configured inside Tag Manager.
 `/Kitchen/Deep-Clean` keeps the ad click ID and opens the kitchen booking step.
 
 ## Netlify Deployment
